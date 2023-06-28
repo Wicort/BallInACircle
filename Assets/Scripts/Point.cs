@@ -6,12 +6,13 @@ using UnityEngine;
 public class Point : MonoBehaviour
 {
     [SerializeField] float _movingSpeed;
+    [SerializeField] Transform _ball;
     public static Action onCollision;
     public static Action onLeaveLevel;
     private void Update()
     {
         transform.position = new Vector2(transform.position.x + _movingSpeed * Time.deltaTime, transform.position.y);
-        transform.Rotate(new Vector3(0f, 0f, -1f));
+        _ball.Rotate(new Vector3(0f, 0f, -1f));
     }
 
     private void OnTriggerEnter2D(Collider2D collision)

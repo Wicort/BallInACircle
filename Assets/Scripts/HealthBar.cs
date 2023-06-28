@@ -15,13 +15,13 @@ public class HealthBar : MonoBehaviour
     private void OnEnable()
     {
         Enemy.onPlayerHit += getHit;
-        Point.onLeaveLevel += getHit;
+        //Point.onLeaveLevel += getHit;
     }
 
     private void OnDisable()
     {
         Enemy.onPlayerHit -= getHit;
-        Point.onLeaveLevel -= getHit;
+        //Point.onLeaveLevel -= getHit;
     }
 
     private void Awake()

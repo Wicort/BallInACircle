@@ -17,6 +17,7 @@ public class PointSpawner : MonoBehaviour
     private void StartSpawner()
     {
         _point.gameObject.SetActive(true);
+        SpawnPoint();
     }
 
     private void OnEnable()
