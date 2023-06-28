@@ -11,6 +11,7 @@ public class Point : MonoBehaviour
     private void Update()
     {
         transform.position = new Vector2(transform.position.x + _movingSpeed * Time.deltaTime, transform.position.y);
+        transform.Rotate(new Vector3(0f, 0f, -1f));
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
