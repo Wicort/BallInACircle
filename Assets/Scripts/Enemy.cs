@@ -6,6 +6,7 @@ using UnityEngine;
 public class Enemy : MonoBehaviour
 {
     [SerializeField] private float _movementSpeed = 1;
+    [SerializeField] private ParticleSystem _explosionEffect;
 
     public static Action onPlayerHit;
 
@@ -18,6 +19,12 @@ public class Enemy : MonoBehaviour
     {
         if (collision.TryGetComponent<PlayerBall>(out PlayerBall _))
         {
+            if (_explosionEffect != null)
+            {
+                ParticleSystem explosion = Instantiate(_explosionEffect, transform.position, Quaternion.identity);
+                explosion.gameObject.transform.SetParent(null);
+
+            }
             onPlayerHit?.Invoke();
         }
 
