@@ -7,8 +7,10 @@ using UnityEngine.UI;
 public class HealthBar : MonoBehaviour
 {
     [SerializeField] private Image _healthBar;
+    [SerializeField] private AudioClip _hitSound;
     private float _maxHealth = 3;
-    [SerializeField] private float _currentHealth;
+    private float _currentHealth;
+    
 
     public static Action onPlayerKill;
 
@@ -31,6 +33,7 @@ public class HealthBar : MonoBehaviour
 
     private void getHit()
     {
+        SoundManager.instance.PlaySound(_hitSound);
         _currentHealth -= 1;
         _healthBar.fillAmount = _currentHealth / _maxHealth;
 

@@ -7,6 +7,7 @@ public class Enemy : MonoBehaviour
 {
     [SerializeField] private float _movementSpeed = 1;
     [SerializeField] private ParticleSystem _explosionEffect;
+    
 
     public static Action onPlayerHit;
 

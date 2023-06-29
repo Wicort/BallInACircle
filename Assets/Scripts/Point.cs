@@ -7,6 +7,8 @@ public class Point : MonoBehaviour
 {
     [SerializeField] float _movingSpeed;
     [SerializeField] Transform _ball;
+    [SerializeField] AudioClip _catchSound;
+
     public static Action onCollision;
     public static Action onLeaveLevel;
     private void Update()
@@ -20,6 +22,7 @@ public class Point : MonoBehaviour
         if (collision.TryGetComponent<PlayerBall>(out PlayerBall _))
         {
             _movingSpeed += 0.1f;
+            SoundManager.instance.PlaySound(_catchSound);
             onCollision?.Invoke();
         } else if (collision.TryGetComponent<PointStopper>(out PointStopper _))
         {
