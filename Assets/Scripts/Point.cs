@@ -11,8 +11,13 @@ public class Point : MonoBehaviour
 
     public static Action onCollision;
     public static Action onLeaveLevel;
+
+    private PauseManager PauseManager => ProjectContext.Instance.PauseManager;
+
     private void Update()
     {
+        if (PauseManager.IsPaused) return;
+
         transform.position = new Vector2(transform.position.x + _movingSpeed * Time.deltaTime, transform.position.y);
         _ball.Rotate(new Vector3(0f, 0f, -1f));
     }

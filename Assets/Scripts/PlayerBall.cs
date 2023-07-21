@@ -11,6 +11,8 @@ public class PlayerBall : MonoBehaviour
 
     private float anglePosition;
 
+    private PauseManager PauseManager => ProjectContext.Instance.PauseManager;
+
     private void OnEnable()
     {
         Point.onCollision += addMovingSpeed;
@@ -26,6 +28,8 @@ public class PlayerBall : MonoBehaviour
     }
     private void Update()
     {
+        if (PauseManager.IsPaused) return;
+
         if (Input.GetMouseButtonDown(0))
         {
             _direction = -_direction;

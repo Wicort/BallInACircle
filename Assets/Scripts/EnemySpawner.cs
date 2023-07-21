@@ -15,6 +15,8 @@ public class EnemySpawner : MonoBehaviour
     private float _timeToSpawn = 0;
     private bool _isSpawnerRunned = false;
 
+    private PauseManager PauseManager => ProjectContext.Instance.PauseManager;
+
     private void OnEnable()
     {
         Game.onStartGame += RunSpawner;
@@ -32,6 +34,8 @@ public class EnemySpawner : MonoBehaviour
 
     private void Update()
     {
+        if (PauseManager.IsPaused) return;
+
         if (!_isSpawnerRunned) return;
 
         _timeToSpawn -= 0.01f;

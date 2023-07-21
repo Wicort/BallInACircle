@@ -49,21 +49,21 @@ public class Game : MonoBehaviour
 
     public void onRestartButtonClicked()
     {
-        Time.timeScale = 1;
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 
     private void StartGame()
     {
-        Time.timeScale = 1;
+        //Time.timeScale = 1;
+        ProjectContext.Instance.PauseManager.setPause(false);
         StartMenu.SetActive(false);
         InGameMenu.SetActive(true);
     }
 
     private void LooseGame()
     {
+        ProjectContext.Instance.PauseManager.setPause(true);
         LooseMenu.SetActive(true);
-        Time.timeScale = 0;
     }
 
     public void setMusicIsOn(bool value)
