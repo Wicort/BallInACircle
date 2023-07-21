@@ -6518,8 +6518,6 @@ MonoBehaviour:
   StartMenu: {fileID: 1684320660}
   LooseMenu: {fileID: 750222194}
   InGameMenu: {fileID: 213207069}
-  _musicOffBtn: {fileID: 1384591681}
-  _musicOnBtn: {fileID: 763458631}
 --- !u!1 &1110497392
 GameObject:
   m_ObjectHideFlags: 0
@@ -7105,52 +7103,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1538099475}
   m_CullTransparentMesh: 1
---- !u!1 &1541385990
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1541385992}
-  - component: {fileID: 1541385991}
-  m_Layer: 0
-  m_Name: Settings
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &1541385991
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1541385990}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e41413cdf88b8954590867723b6243d7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _musicOffBtn: {fileID: 1384591681}
-  _musicOnBtn: {fileID: 763458631}
---- !u!4 &1541385992
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1541385990}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 197, y: 350, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 12
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1683004858
 GameObject:
   m_ObjectHideFlags: 0
@@ -7552,6 +7504,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 11bce0e09bf7179459f96b5137a3127e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _clipSource: {fileID: 2101567074}
+  _musicSource: {fileID: 2134449448}
+  _btnMusicOff: {fileID: 1384591681}
+  _btnMusicOn: {fileID: 763458631}
 --- !u!4 &1928377354
 Transform:
   m_ObjectHideFlags: 0
@@ -7565,7 +7521,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 13
+  m_RootOrder: 12
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1954044361
 GameObject:
@@ -7677,7 +7633,6 @@ GameObject:
   m_Component:
   - component: {fileID: 2101567075}
   - component: {fileID: 2101567074}
-  - component: {fileID: 2101567076}
   m_Layer: 0
   m_Name: SoundManager
   m_TagString: Untagged
@@ -7797,19 +7752,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 11
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2101567076
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2101567073}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e917755b9c4027049ac6e52d1dcd9eea, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _musicSource: {fileID: 2134449448}
 --- !u!1 &2134449446
 GameObject:
   m_ObjectHideFlags: 0

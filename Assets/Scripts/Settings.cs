@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class Settings : MonoBehaviour
+public class Settings
 {
     public class PlayerSettings
     {
@@ -12,32 +12,26 @@ public class Settings : MonoBehaviour
         public bool ADSisOn = true;
     }
 
-    [SerializeField] private Button _musicOffBtn;
-    [SerializeField] private Button _musicOnBtn;
+    private Button _musicOffBtn;
+    private Button _musicOnBtn;
 
     public PlayerSettings CurrentSettings;
 
-    public static Settings Instance;
-
-    public static Action onSettingsLoaded;
-
-    
-
-    private void Awake()
+    public Settings(Button musicOffBtn, Button musicOnBtn)
     {
-        if (Instance == null)
-        {
-            Instance = this;
-            transform.SetParent(null);
-            Load();
+        _musicOffBtn = musicOffBtn;
+        _musicOnBtn = musicOnBtn;
 
-            DontDestroyOnLoad(gameObject);
-        }
-        else
-        {
-            Destroy(gameObject);
-        }
+        Load();
+
+        ProjectContext.Instance.SoundManager.setSoundOn(CurrentSettings.MusicIsOn);
+        Debug.Log($"Load isSoundOn: {ProjectContext.Instance.SoundManager.IsSoundOn}");
+
+
+        _musicOnBtn.gameObject.SetActive(CurrentSettings.MusicIsOn);
+        _musicOffBtn.gameObject.SetActive(!CurrentSettings.MusicIsOn);
     }
+
 
     public void Save()
     {
@@ -49,9 +43,16 @@ public class Settings : MonoBehaviour
     {
         string data = PlayerPrefs.GetString("PlayerSettings");
         CurrentSettings = JsonUtility.FromJson<PlayerSettings>(data);
-        if (CurrentSettings == null) CurrentSettings = new PlayerSettings();
+        if (CurrentSettings == null) CurrentSettings = new PlayerSettings();        
+    }
 
-        onSettingsLoaded?.Invoke();
+    public void SetMusicOn(bool value)
+    {
+        CurrentSettings.MusicIsOn = value;
+        Save();
+        ProjectContext.Instance.SoundManager.setSoundOn(value);
+        _musicOnBtn.gameObject.SetActive(CurrentSettings.MusicIsOn);
+        _musicOffBtn.gameObject.SetActive(!CurrentSettings.MusicIsOn);
     }
 
 

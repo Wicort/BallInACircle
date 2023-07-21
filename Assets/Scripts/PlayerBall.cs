@@ -11,11 +11,18 @@ public class PlayerBall : MonoBehaviour
 
     private float anglePosition;
 
-    private PauseManager PauseManager => ProjectContext.Instance.PauseManager;
+    private bool IsPaused => ProjectContext.Instance.PauseManager.IsPaused;
 
     private void OnEnable()
     {
         Point.onCollision += addMovingSpeed;
+        Game.onStartGame += initialize;
+    }
+
+    private void OnDisable()
+    {
+        Point.onCollision -= addMovingSpeed;
+        Game.onStartGame -= initialize;
     }
 
     private Vector2 CalcPosition()
@@ -28,7 +35,7 @@ public class PlayerBall : MonoBehaviour
     }
     private void Update()
     {
-        if (PauseManager.IsPaused) return;
+        if (IsPaused) return;
 
         if (Input.GetMouseButtonDown(0))
         {
@@ -46,5 +53,10 @@ public class PlayerBall : MonoBehaviour
     private void addMovingSpeed()
     {
         _movingSpeed += 0.1f;
+    }
+
+    private void initialize()
+    {
+        _movingSpeed = 1;
     }
 }

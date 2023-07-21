@@ -8,14 +8,14 @@ public class Enemy : MonoBehaviour
     [SerializeField] private float _movementSpeed = 1;
     [SerializeField] private ParticleSystem _explosionEffect;
 
-    private PauseManager PauseManager => ProjectContext.Instance.PauseManager;
-    
+    private bool IsPaused => ProjectContext.Instance.PauseManager.IsPaused;
+
 
     public static Action onPlayerHit;
 
     private void Update()
     {
-        if (PauseManager.IsPaused) return;
+        if (IsPaused) return;
 
         transform.position = new Vector2(transform.position.x + _movementSpeed * Time.deltaTime, transform.position.y);
     }

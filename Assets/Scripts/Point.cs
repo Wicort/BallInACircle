@@ -12,11 +12,21 @@ public class Point : MonoBehaviour
     public static Action onCollision;
     public static Action onLeaveLevel;
 
-    private PauseManager PauseManager => ProjectContext.Instance.PauseManager;
+    private bool IsPaused => ProjectContext.Instance.PauseManager.IsPaused;
+
+    private void OnEnable()
+    {
+        Game.onStartGame += initialize;
+    }
+
+    private void OnDisable()
+    {
+        Game.onStartGame -= initialize;
+    }
 
     private void Update()
     {
-        if (PauseManager.IsPaused) return;
+        if (IsPaused) return;
 
         transform.position = new Vector2(transform.position.x + _movingSpeed * Time.deltaTime, transform.position.y);
         _ball.Rotate(new Vector3(0f, 0f, -1f));
@@ -27,11 +37,16 @@ public class Point : MonoBehaviour
         if (collision.TryGetComponent<PlayerBall>(out PlayerBall _))
         {
             _movingSpeed += 0.1f;
-            SoundManager.instance.PlaySound(_catchSound);
+            ProjectContext.Instance.SoundManager.PlaySound(_catchSound);
             onCollision?.Invoke();
         } else if (collision.TryGetComponent<PointStopper>(out PointStopper _))
         {
             onLeaveLevel?.Invoke();
         }
+    }
+
+    private void initialize()
+    {
+        _movingSpeed = 1;
     }
 }

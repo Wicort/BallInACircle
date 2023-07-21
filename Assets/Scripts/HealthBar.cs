@@ -17,23 +17,25 @@ public class HealthBar : MonoBehaviour
     private void OnEnable()
     {
         Enemy.onPlayerHit += getHit;
+        Game.onStartGame += Initialize;
         //Point.onLeaveLevel += getHit;
     }
 
     private void OnDisable()
     {
         Enemy.onPlayerHit -= getHit;
+        Game.onStartGame -= Initialize;
         //Point.onLeaveLevel -= getHit;
     }
 
     private void Awake()
     {
-        _currentHealth = _maxHealth;
+        Initialize();
     }
 
     private void getHit()
     {
-        SoundManager.instance.PlaySound(_hitSound);
+        ProjectContext.Instance.SoundManager.PlaySound(_hitSound);
         _currentHealth -= 1;
         _healthBar.fillAmount = _currentHealth / _maxHealth;
 
@@ -41,5 +43,12 @@ public class HealthBar : MonoBehaviour
         {
             onPlayerKill?.Invoke();
         }
+    }
+
+    public void Initialize()
+    {
+        Debug.Log("Initialize health");
+        _currentHealth = _maxHealth;
+        _healthBar.fillAmount = _currentHealth / _maxHealth;
     }
 }

@@ -10,22 +10,30 @@ public class Scores : MonoBehaviour
 
     private void Start()
     {
-        _scoresText.text = _scores.ToString();
+        initialize();
     }
 
     private void OnEnable()
     {
         Point.onCollision += AddScore;
+        Game.onStartGame += initialize;
     }
 
     private void OnDisable()
     {
         Point.onCollision -= AddScore;
+        Game.onStartGame -= initialize;
     }
 
     private void AddScore()
     {
         _scores += 1;
+        _scoresText.text = _scores.ToString();
+    }
+
+    private void initialize()
+    {
+        _scores = 0;
         _scoresText.text = _scores.ToString();
     }
 }

@@ -15,7 +15,7 @@ public class EnemySpawner : MonoBehaviour
     private float _timeToSpawn = 0;
     private bool _isSpawnerRunned = false;
 
-    private PauseManager PauseManager => ProjectContext.Instance.PauseManager;
+    private bool IsPaused => ProjectContext.Instance.PauseManager.IsPaused;
 
     private void OnEnable()
     {
@@ -34,7 +34,7 @@ public class EnemySpawner : MonoBehaviour
 
     private void Update()
     {
-        if (PauseManager.IsPaused) return;
+        if (IsPaused) return;
 
         if (!_isSpawnerRunned) return;
 

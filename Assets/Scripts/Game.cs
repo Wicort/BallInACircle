@@ -11,22 +11,17 @@ public class Game : MonoBehaviour
     [SerializeField] private GameObject LooseMenu;
     [SerializeField] private GameObject InGameMenu;
 
-
-    [SerializeField] private Button _musicOffBtn;
-    [SerializeField] private Button _musicOnBtn;
-
     public static Action onStartGame;
     public static Action onSettingMusicIsOnChanged;
+    private Settings Settings => ProjectContext.Instance.Settings;
 
     private void OnEnable()
     {
         HealthBar.onPlayerKill += LooseGame;
-        Settings.onSettingsLoaded += onSettingsLoaded;
     }
     private void OnDisable()
     {
         HealthBar.onPlayerKill -= LooseGame;
-        Settings.onSettingsLoaded -= onSettingsLoaded;
     }
 
     private void Awake()
@@ -36,10 +31,6 @@ public class Game : MonoBehaviour
         InGameMenu.SetActive(false);
     }
 
-    private void onSettingsLoaded()
-    {
-        setMusicIsOn(Settings.Instance.CurrentSettings.MusicIsOn);
-    }
 
     public void onStartButtonClicked()
     {
@@ -49,12 +40,19 @@ public class Game : MonoBehaviour
 
     public void onRestartButtonClicked()
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        onStartGame?.Invoke();
+        //SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        StartGame();
+        var enemies = FindObjectsByType<Enemy>(FindObjectsSortMode.None);
+        foreach (var enemy in enemies)
+        {
+            Destroy(enemy.gameObject);
+        }
+
     }
 
     private void StartGame()
     {
-        //Time.timeScale = 1;
         ProjectContext.Instance.PauseManager.setPause(false);
         StartMenu.SetActive(false);
         InGameMenu.SetActive(true);
@@ -68,13 +66,6 @@ public class Game : MonoBehaviour
 
     public void setMusicIsOn(bool value)
     {
-        Settings.Instance.CurrentSettings.MusicIsOn = value;
-        Settings.Instance.Save();
-
-        _musicOnBtn.gameObject.SetActive(value);
-        _musicOffBtn.gameObject.SetActive(!value);
-
-        onSettingMusicIsOnChanged?.Invoke(); 
-
+        Settings.SetMusicOn(value);
     }
 }

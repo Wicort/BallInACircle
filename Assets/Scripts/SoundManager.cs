@@ -2,55 +2,51 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SoundManager : MonoBehaviour
+public class SoundManager : ISoundOnHandler
 {
-    public static SoundManager instance { get; private set; }
+    
+    private AudioSource _musicSource;
+    private AudioSource _clipSource;
 
-    [SerializeField] private AudioSource _musicSource;
+    public bool IsSoundOn;
+    List<ISoundOnHandler> _handlers = new List<ISoundOnHandler>();
 
-    private AudioSource source;
-
-    private void OnEnable()
+    public void Register(ISoundOnHandler handler)
     {
-        Settings.onSettingsLoaded += setMusicActive;
-        Game.onSettingMusicIsOnChanged += setMusicActive;
+        _handlers.Add(handler);
+    }
+    public void UnRegister(ISoundOnHandler handler)
+    {
+        _handlers.Remove(handler);
     }
 
-    private void OnDisable()
+    public SoundManager(AudioSource musicSource, AudioSource clipSource)
     {
-        Settings.onSettingsLoaded -= setMusicActive;
-        Game.onSettingMusicIsOnChanged -= setMusicActive;
-    }
-
-    private void Awake()
-    {
-        
-        
-        if (instance == null)
-        {
-            instance = this;
-            DontDestroyOnLoad(gameObject);
-        }
-        else if (instance != null && instance != this)
-        {
-            Destroy(gameObject);
-        }
-
-        source = GetComponent<AudioSource>();
-
+        _musicSource = musicSource;
+        _clipSource = clipSource;
     }
     
 
     public void PlaySound(AudioClip _sound)
     {
-        source.PlayOneShot(_sound);
+        Debug.Log($"Play sound: {IsSoundOn}");
+        if (!IsSoundOn) return;
+
+        _clipSource.PlayOneShot(_sound);
     }
 
-    public void setMusicActive()
+
+    public void setSoundOn(bool isSoundOn)
     {
-        source.volume = Settings.Instance.CurrentSettings.MusicIsOn ? 0.2f : 0f;
-        _musicSource.volume = Settings.Instance.CurrentSettings.MusicIsOn ? 0.2f : 0f;
-        Debug.Log(_musicSource.volume);
-    }
+        IsSoundOn = isSoundOn;
+        Debug.Log($"set isSoundOn: {isSoundOn}");
 
+        _clipSource.volume = IsSoundOn ? 0.2f : 0f;
+        _musicSource.volume = IsSoundOn ? 0.2f : 0f;
+
+        foreach (var handler in _handlers)
+        {
+            handler.setSoundOn(isSoundOn);
+        }
+    }
 }
