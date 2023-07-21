@@ -55,6 +55,7 @@ public class Game : MonoBehaviour
     {
         ProjectContext.Instance.PauseManager.setPause(false);
         StartMenu.SetActive(false);
+        LooseMenu.SetActive(false);
         InGameMenu.SetActive(true);
     }
 

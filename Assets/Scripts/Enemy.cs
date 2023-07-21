@@ -5,13 +5,20 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
-    [SerializeField] private float _movementSpeed = 1;
     [SerializeField] private ParticleSystem _explosionEffect;
+
+    private float _movementSpeed = 1;
 
     private bool IsPaused => ProjectContext.Instance.PauseManager.IsPaused;
 
 
     public static Action onPlayerHit;
+
+    private void Awake()
+    {
+        var rnd = new System.Random();
+        _movementSpeed = Mathf.Clamp((float)rnd.NextDouble() * 2, 0.5f, 1.5f);
+    }
 
     private void Update()
     {
