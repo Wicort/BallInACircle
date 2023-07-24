@@ -6,7 +6,10 @@ using UnityEngine;
 public class Scores : MonoBehaviour
 {
     [SerializeField] TextMeshProUGUI _scoresText;
+    [SerializeField] TextMeshProUGUI _recordText;
     private int _scores = 0;
+
+    private int _topScore => ProjectContext.Instance.Settings.CurrentSettings.TopScore;
 
     private void Start()
     {
@@ -17,6 +20,7 @@ public class Scores : MonoBehaviour
     {
         Point.onCollision += AddScore;
         Game.onStartGame += initialize;
+        Game.onLooseGame += showTopScore;
     }
 
     private void OnDisable()
@@ -35,5 +39,19 @@ public class Scores : MonoBehaviour
     {
         _scores = 0;
         _scoresText.text = _scores.ToString();
+        _recordText.gameObject.SetActive(false);
+    }
+
+    private void showTopScore()
+    {
+        _recordText.gameObject.SetActive(true);
+        if (_topScore < _scores)
+        {
+            _recordText.text = $"NEW BEST SCORE!!!";
+            ProjectContext.Instance.Settings.SetTopScore(_scores);
+        } else
+        {
+            _recordText.text = $"Best score: {_topScore}";
+        }
     }
 }

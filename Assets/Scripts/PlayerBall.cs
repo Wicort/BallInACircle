@@ -4,9 +4,10 @@ using UnityEngine;
 
 public class PlayerBall : MonoBehaviour
 {
-    [SerializeField] Transform _centerPoint;
-    [SerializeField] float _movingRadius;
-    [SerializeField] float _movingSpeed;
+    [SerializeField] private Transform _centerPoint;
+    [SerializeField] private float _movingRadius;
+    [SerializeField] private float _movingSpeed;
+    [SerializeField] private Animator _animator;
     private int _direction = 1;
 
     private float anglePosition;
@@ -53,6 +54,7 @@ public class PlayerBall : MonoBehaviour
     private void addMovingSpeed()
     {
         _movingSpeed += 0.1f;
+        _animator.SetTrigger("Catch");
     }
 
     private void initialize()

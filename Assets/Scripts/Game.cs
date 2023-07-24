@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -10,9 +11,11 @@ public class Game : MonoBehaviour
     [SerializeField] private GameObject StartMenu;
     [SerializeField] private GameObject LooseMenu;
     [SerializeField] private GameObject InGameMenu;
+    [SerializeField] private TextMeshProUGUI _recordText;
 
     public static Action onStartGame;
     public static Action onSettingMusicIsOnChanged;
+    public static Action onLooseGame;
     private Settings Settings => ProjectContext.Instance.Settings;
 
     private void OnEnable()
@@ -40,8 +43,6 @@ public class Game : MonoBehaviour
 
     public void onRestartButtonClicked()
     {
-        onStartGame?.Invoke();
-        //SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         StartGame();
         var enemies = FindObjectsByType<Enemy>(FindObjectsSortMode.None);
         foreach (var enemy in enemies)
@@ -49,6 +50,7 @@ public class Game : MonoBehaviour
             Destroy(enemy.gameObject);
         }
 
+        onStartGame?.Invoke();
     }
 
     private void StartGame()
@@ -63,6 +65,8 @@ public class Game : MonoBehaviour
     {
         ProjectContext.Instance.PauseManager.setPause(true);
         LooseMenu.SetActive(true);
+        onLooseGame?.Invoke();
+        
     }
 
     public void setMusicIsOn(bool value)

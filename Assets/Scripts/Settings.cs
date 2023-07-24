@@ -10,6 +10,7 @@ public class Settings
     {
         public bool MusicIsOn = true;
         public bool ADSisOn = true;
+        public int TopScore = 0;
     }
 
     private Button _musicOffBtn;
@@ -55,5 +56,13 @@ public class Settings
         _musicOffBtn.gameObject.SetActive(!CurrentSettings.MusicIsOn);
     }
 
+    public void SetTopScore(int value)
+    {
+        if (value > CurrentSettings.TopScore)
+        {
+            CurrentSettings.TopScore = value;
+            Save();
+        }
+    }
 
 }
