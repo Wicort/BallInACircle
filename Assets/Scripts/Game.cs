@@ -1,17 +1,15 @@
 using System;
 using System.Collections;
-using System.Collections.Generic;
-using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using YG;
 
 public class Game : MonoBehaviour
 {
     [SerializeField] private GameObject StartMenu;
     [SerializeField] private GameObject LooseMenu;
     [SerializeField] private GameObject InGameMenu;
-    [SerializeField] private TextMeshProUGUI _recordText;
 
     public static Action onStartGame;
     public static Action onSettingMusicIsOnChanged;
@@ -66,11 +64,19 @@ public class Game : MonoBehaviour
         ProjectContext.Instance.PauseManager.setPause(true);
         LooseMenu.SetActive(true);
         onLooseGame?.Invoke();
-        
+
+        StartCoroutine(ShowFullScreen());
     }
 
     public void setMusicIsOn(bool value)
     {
         Settings.SetMusicOn(value);
+    }
+
+    IEnumerator ShowFullScreen()
+    {
+        yield return new WaitForSeconds(1f);
+
+        YandexGame.FullscreenShow();
     }
 }
